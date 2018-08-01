@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
-    number: { type: Number , unique: true },
+    number: { type: Number , default: 1 , unique: true },
     date: { type: Date , default: Date.now },
     shipping_address: {
         street: String,
