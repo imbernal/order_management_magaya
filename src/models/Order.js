@@ -13,7 +13,8 @@ const OrderSchema = new Schema({
         country: String
     },
     payment_type: String,
-    total: Number
+    total: Number,
+    customer: { type: Schema.ObjectId , ref: 'CutomerSchema' }
 });
 
 module.exports = mongoose.model('Order' , OrderSchema);
