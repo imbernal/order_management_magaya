@@ -1,5 +1,9 @@
 let Customer = require('../models/Customer');
 
+
+/**
+ * Basic api methods
+ */
 exports.getAllCustomer = async ( req , res ) => {
 
       try{
@@ -41,7 +45,17 @@ exports.saveCustomer = async ( req , res ) => {
 
 };
 
-exports.getCustomerById = ( req , res ) => {
+exports.updateCustomer = async ( req , res ) => {
+
+      try {
+
+           await Customer.findByIdAndUpdate(req.params.id , { $set: req.body });
+           res.json({ msg: "The Customer was updaed!!!" });
+            
+      } catch (error) {
+            console.log("Error: " , error);
+            res.json(error);
+      }
 
 }
 
@@ -62,24 +76,45 @@ exports.deleteCustomer = async ( req , res ) => {
       }
 }
 
+
+/**
+ * Auxiliary Methods
+*/
+
+exports.getCustomerById = async ( req , res ) => {
+
+      try {
+            let customer = await Customer.findById(req.params.id);
+            res.json({ customer });
+            
+      } catch (error) {
+            console.log("Error" , error);
+            res.json({ error });
+      }
+
+}
+
 // Method to switch isInOrder when order is created or deleted
 exports.isInOrder = async (customerId , isAdded ) => {
       
       try {
+            
+            let customer = await Customer.findById(customerId);
 
-            let customer = Customer.findById(customerId);
-
-            switch (customer.isInOrder > 0) {
+            switch (customer.isInOrder >= 0) {
                   case isAdded:
                         customer.isInOrder += 1;
-                        break;      
+                        break;
+
+                  case customer.isInOrder > 0:
+                        customer.isInOrder -= 1;
+                        break;
+
                   default:
-                        customer.isInOrder -=1;
                         break;
             }
 
-            customer.isInOrder  = customer.isInOrder > 0 && isAdded ? customer.isInOrder++ : ;
-            await Customer.save(customer);
+            await customer.save();
             
       } catch (error) {
             console.log("Error" , error);

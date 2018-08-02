@@ -6,6 +6,7 @@ const ProductSchema = new Schema({
     description: String,
     price: Number,
     weight: Number,
+    isInOrder: { type: Number , default: 0 },
     order: { type: Schema.ObjectId , ref: 'OrderSchema' }
 });
 

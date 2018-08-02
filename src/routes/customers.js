@@ -20,6 +20,7 @@ module.exports = app => {
      */
     app.route('/customer/:id')
         .get(customerCtrl.getCustomerById)
+        .put(customerCtrl.updateCustomer)
         .delete(customerCtrl.deleteCustomer)
 
 }

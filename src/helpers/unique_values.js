@@ -2,14 +2,12 @@
  * Functions to autoincrement order's number and product's ID
  */
 
-
-
 exports.orderNumber = function* () {
     
     let orderNumber = 0;
 
     while(true){
-        yield orderNumber;
+        yield orderNumber++;
     }
 }
 
