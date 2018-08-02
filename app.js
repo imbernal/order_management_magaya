@@ -5,10 +5,7 @@ const express = require('express'),
       mongoose = require('mongoose');
       port = process.env.PORT || 3000,
       bodyParser = require('body-parser'),
-      morgan = require('morgan'),
-      cors = require('cors'),
-      path = require('path');
-
+      cors = require('cors');
 
 mongoose.Promises = global.Promise;
 
@@ -19,7 +16,6 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PWD}@ds25971
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(morgan('combined'));
 app.use(cors());
 
 require('./src/routes')(app);
