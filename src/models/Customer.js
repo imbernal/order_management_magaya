@@ -13,7 +13,8 @@ const CustomerSchema = new Schema({
         state: String,
         zip: String,
         country: String
-    }
+    },
+    isInOrder: { type: Number , default: 0 }
 });
 
 module.exports = mongoose.model("Customer" , CustomerSchema);

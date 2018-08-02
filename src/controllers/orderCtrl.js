@@ -1,29 +1,60 @@
 let Order = require('../models/Order');
+let customerCtrl = require('./customerCtrl');
 
-exports.getAllOders = ( req , res ) => {
+exports.getAllOders = async ( req , res ) => {
    
-    Order.find({})
-         .then( data => res.json({ data }) )
-         .catch( () => res.status(400).send());
+    try {
+
+        let orderData = await Order.find({});
+
+        res.json( orderData );
+        
+    } catch (error) {
+        console.log("Error: " , error);
+        res.json( error )
+    }
 }
 
-exports.saveOrder = ( req , res ) => {
+exports.saveOrder = async ( req , res ) => {
 
-    const {
-        // shipping_address,
-        payment_type,
-        total
-    } = req.body;
+    try {
 
-    let order =  new Order({
-        // shipping_address,
-        payment_type,
-        total
-    });
+        let order =  new Order({
+            payment_type : req.body.payment_type,
+            total : req.body.total,
+            shipping_address: {
+                street : req.body.street,
+                number : req.body.number,
+                city   : req.body.city,
+                state  : req.body.state,
+                zip    : req.body.zip,
+                country: req.body.country
+            },
+            customer : req.body.customer
+        });
+    
+        await order.save();
 
-    order.save()
-    .then( data => res.send(data) )
-    .catch( () => res.status(400).send() )
+        //Find Customer and update isInOrder property
+        customerCtrl.isInOrder(order.customer);
+        
+        res.json({ order });
+        
+    } catch (error) {
+        console.log("Error: " , error);
+        res.json( error )
+    }
+};
 
+exports.deleteOrder = async ( req , res ) => {
 
+    try {
+
+        await Order.findByIdAndRemove(req.params.id);
+        res.json({ msg: "I was deleted successfully!"  });
+          
+    } catch (error) {
+          console.log("Errror: " , error);
+          res.json( error );
+    }     
 }

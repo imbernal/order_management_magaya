@@ -2,7 +2,7 @@ const mongoose =  require('mongoose');
 const Schema =  mongoose.Schema;
 
 const ProductSchema = new Schema({
-    id: { type: String , unique: true },
+    id: { type: String , default: 1 },
     description: String,
     price: Number,
     weight: Number,

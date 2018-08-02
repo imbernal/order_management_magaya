@@ -1,30 +1,42 @@
 let Product = require('../models/Product');
 
-exports.getAllProducs =  ( req , res ) => {
+exports.getAllProducs = async ( req , res ) => {
 
-    Product.find({})
-        .then( data => res.json({ data }) )
-        .catch( res.status(400).send() );
+    try {
 
-}
+        let productData = await Product.find({});
+        res.json( productData );
+        
+    } catch (error) {
+        console.log("Error: " , error);
+        res.json( error );
+    }
+};
 
-exports.saveProduct = ( req , res ) => {
+exports.saveProduct = async ( req , res ) => {
 
-    const {
-        description,
-        price,
-        weight
-    } = req.body;
+    try {
 
+        const {
+            description,
+            price,
+            weight,
+            order
+        } = req.body;
+    
+        let product = new Product({
+            description,
+            price,
+            weight,
+            order
+        });
+   
+        await product.save();
 
-    let product = new Product({
-        description,
-        price,
-        weight
-    });
-
-    product.save()
-           .then( data => res.json({ data }) )
-           .catch( res.status(400).send() );
-
-}
+        res.json(product);
+        
+    } catch (error) {
+        console.log("Error: " , error);
+        res.json(error);
+    }
+};
