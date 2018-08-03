@@ -52,8 +52,8 @@ exports.deleteProduct = async (req, res) => {
       Product.deleteOne(customer);
       res.json({ msg: "Product deleted successfully!" });
     }else
-      res.json({ msg: 'Product cannot be deleted because he in an order!' });
-      
+      res.json({ msg: 'Product cannot be deleted because he is in an order!' });
+
   } catch (error) {
     console.log("Error: ", error);
     res.json(error);
