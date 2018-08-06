@@ -21,4 +21,10 @@ module.exports = app => {
     .get(orderCtrl.getOrderById)
     .put(orderCtrl.updateOrder)
     .delete(orderCtrl.deleteOrder);
+
+  /**
+   * Auxiliary Routes
+   * */  
+  app.route("/orders/total")
+    .get(orderCtrl.getTotalOrderPrice);
 };

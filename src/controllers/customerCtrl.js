@@ -25,7 +25,6 @@ exports.saveCustomer = async ( req , res ) => {
                   email : req.body.email,
                   shipping_address: {
                         street : req.body.street,
-                        number : req.body.number,
                         city   : req.body.city,
                         state  : req.body.state,
                         zip    : req.body.zip,
@@ -36,7 +35,7 @@ exports.saveCustomer = async ( req , res ) => {
 
             await customer.save();
 
-            res.json({ customer });
+            res.json( customer );
             
       } catch (error) {
             console.log(error);
@@ -48,7 +47,6 @@ exports.saveCustomer = async ( req , res ) => {
 exports.updateCustomer = async ( req , res ) => {
 
       try {
-
            await Customer.findByIdAndUpdate(req.params.id , { $set: req.body });
            res.json({ msg: "The Customer was updaed!!!" });
             
@@ -85,7 +83,7 @@ exports.getCustomerById = async ( req , res ) => {
 
       try {
             let customer = await Customer.findById(req.params.id);
-            res.json({ customer });
+            res.json(customer);
             
       } catch (error) {
             console.log("Error" , error);

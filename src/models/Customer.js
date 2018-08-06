@@ -7,7 +7,6 @@ const CustomerSchema = new Schema({
   email: { type: String, unique: true },
   shipping_address: {
     street: String,
-    number: String,
     city: String,
     state: String,
     zip: String,

@@ -21,4 +21,12 @@ module.exports = app => {
     .get(productCtrl.getProductById)
     .put(productCtrl.updateProduct)
     .delete(productCtrl.deleteProduct);
+
+  /**
+   * Auxiliary Routes
+  */
+  //Get Products by a list of id
+  app.route("/products/:ids")
+    .get(productCtrl.getProductByIds)
+
 };

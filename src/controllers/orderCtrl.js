@@ -7,10 +7,13 @@ let productCtrl = require("./productCtrl");
  */
 exports.getAllOders = async (req, res) => {
   try {
+    
     let orderData = await Order.find({});
+ 
+    res.send(orderData);
 
-    res.json(orderData);
   } catch (error) {
+
     console.log("Error: ", error);
     res.json(error);
   }
@@ -29,7 +32,7 @@ exports.saveOrder = async (req, res) => {
         country: req.body.country
       },
       customer: req.body.customer,
-      products: req.body.product
+      products: req.body.products
     });
 
     //Getting Total Price
@@ -43,7 +46,7 @@ exports.saveOrder = async (req, res) => {
     //Find Product and update isInOrder property
     productCtrl.isInOrder(order.products, true);
 
-    res.json({ order });
+    res.json( order );
   } catch (error) {
     console.log("Error: ", error);
     res.json(error);
@@ -62,8 +65,8 @@ exports.updateOrder = async (req, res) => {
 
 exports.deleteOrder = async (req, res) => {
   try {
-    let order = await Order.findById(req.params.id);
 
+    let order = await Order.findById(req.params.id);
     await Order.deleteOne(order);
 
     //Find Customer and update isInOrder property
@@ -82,8 +85,23 @@ exports.deleteOrder = async (req, res) => {
 
 exports.getOrderById = async (req, res) => {
   try {
-    let orderData = Order.findById(req.params.id);
+    let orderData = await Order.findById(req.params.id);
     res.json(orderData);
+  } catch (error) {
+    console.log("Error", error);
+    res.json(error);
+  }
+};
+
+exports.getTotalOrderPrice = async (req, res) => {
+  try {
+    let orders = await Order.find({});
+
+    const sum = orders
+      .map(item => item.total)
+      .reduce((prev, curr) => prev + curr);
+      
+    res.json(sum);
   } catch (error) {
     console.log("Error", error);
     res.json(error);

@@ -74,6 +74,23 @@ exports.getProductById = async (req, res) => {
   }
 };
 
+// Method to get products by list of id
+exports.getProductByIds = async (req , res) => {
+  try {
+    let products = [];
+    const productIds = req.params.ids.split(',');
+
+    for (const id of productIds) {
+        let product = await Product.findById(id);
+        products.push( product );
+    }  
+    res.json(products);
+  } catch (error) {
+    console.log("Error", error);
+    res.json(error);
+  }
+}
+
 // Method to switch isInOrder when order is created or deleted
 exports.isInOrder = async (productsId, isAdded) => {
   try {
