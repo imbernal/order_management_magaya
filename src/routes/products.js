@@ -25,8 +25,8 @@ module.exports = app => {
   /**
    * Auxiliary Routes
   */
-  //Get Products by a list of id
-  app.route("/products/:ids")
-    .get(productCtrl.getProductByIds)
+  //Get Products by a OrderID
+  app.route("/products-order/:orderId")
+    .get(productCtrl.getProductByOrderId)
 
 };

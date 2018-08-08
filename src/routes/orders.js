@@ -27,4 +27,5 @@ module.exports = app => {
    * */  
   app.route("/orders/total")
     .get(orderCtrl.getTotalOrderPrice);
+  
 };

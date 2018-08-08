@@ -1,4 +1,5 @@
 let Product = require("../models/Product");
+const Order = require('../models/Order');
 
 /**
  * Basic api methods
@@ -75,15 +76,17 @@ exports.getProductById = async (req, res) => {
 };
 
 // Method to get products by list of id
-exports.getProductByIds = async (req , res) => {
+exports.getProductByOrderId = async (req , res) => {
   try {
     let products = [];
-    const productIds = req.params.ids.split(',');
-
-    for (const id of productIds) {
+    
+    const orderData = await Order.findById(req.params.orderId);
+    
+    for (const id of orderData.products) {
         let product = await Product.findById(id);
         products.push( product );
-    }  
+    }
+    
     res.json(products);
   } catch (error) {
     console.log("Error", error);

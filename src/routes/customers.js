@@ -21,4 +21,12 @@ module.exports = app => {
   app.route("/customer/:id")
     .get(customerCtrl.getCustomerById)
     .delete(customerCtrl.deleteCustomer);
+
+  /**
+   * Auxiliary Routes
+   * */ 
+  
+  //Get Customer by a OrderID
+  app.route("/customer-order/:orderId")
+    .get(customerCtrl.getCustomerByOrderId)  
 };
