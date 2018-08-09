@@ -40,8 +40,8 @@ exports.saveCustomer = async (req, res) => {
 
 exports.updateCustomer = async (req, res) => {
   try {
-    await Customer.findByIdAndUpdate(req.params.id, { $set: req.body });
-    res.json({ msg: "The Customer was updaed!!!" });
+    let customerData = await Customer.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.json(customerData);
   } catch (error) {
     console.log("Error: ", error);
     res.json(error);

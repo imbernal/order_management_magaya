@@ -55,8 +55,8 @@ exports.saveOrder = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
   try {
-    await Order.findByIdAndUpdate(req.params.id, { $set: req.body });
-    res.json({ msg: "The Order was updated!!" });
+    let orderData = await Order.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.json(orderData);
   } catch (error) {
     console.log(error);
     res.json(error);

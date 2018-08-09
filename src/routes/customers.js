@@ -8,8 +8,7 @@ module.exports = app => {
    */
   app.route("/customers")
     .get(customerCtrl.getAllCustomer)
-    .post(customerCtrl.saveCustomer)
-    .put(customerCtrl.updateCustomer);
+    .post(customerCtrl.saveCustomer);
 
   /**
    * Routes:
@@ -20,7 +19,8 @@ module.exports = app => {
    */
   app.route("/customer/:id")
     .get(customerCtrl.getCustomerById)
-    .delete(customerCtrl.deleteCustomer);
+    .delete(customerCtrl.deleteCustomer)
+    .put(customerCtrl.updateCustomer);
 
   /**
    * Auxiliary Routes

@@ -37,8 +37,8 @@ exports.saveProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    await Product.findByIdAndUpdate(req.params.id, { $set: req.body });
-    res.json({ msg: "The product was updated" });
+    let productData = await Product.findByIdAndUpdate(req.params.id, { $set: req.body });
+    res.json(productData);
   } catch (error) {
     console.log("Error: ", error);
     res.json(error);
