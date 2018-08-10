@@ -67,11 +67,11 @@ exports.deleteOrder = async (req, res) => {
   try {
 
     let order = await Order.findById(req.params.id);
-    await Order.deleteOne(order);
-
+    await Order.remove(order);
     //Find Customer and update isInOrder property
     customerCtrl.isInOrder(order.customer, false);
-
+    productCtrl.isInOrder(order.products , false);
+    
     res.json({ msg: "I was deleted successfully!" });
   } catch (error) {
     console.log("Errror: ", error);

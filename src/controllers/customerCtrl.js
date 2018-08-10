@@ -53,7 +53,7 @@ exports.deleteCustomer = async (req, res) => {
     let customer = await Customer.findById(req.params.id);
 
     if (customer.isInOrder == 0) {
-      Customer.deleteOne(customer);
+      await Customer.remove(customer);
       res.json({ msg: "Custometer deleted successfully!" });
     } else
       res.json({
