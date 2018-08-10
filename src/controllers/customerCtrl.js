@@ -33,10 +33,10 @@ exports.saveCustomer = async (req, res) => {
 
     res.json(customer);
   } catch (error) {
-    if(error.message.includes('duplicate'))
-      res.json({msg: "The Email already exists"});
+    if (error.message.includes('duplicate'))
+      res.json({ msg: "The Email already exists" });
     else
-      res.json({msg: "There was a problem saving the customer"});
+      res.json({ msg: "There was a problem saving the customer" });
   }
 };
 
@@ -45,8 +45,10 @@ exports.updateCustomer = async (req, res) => {
     let customerData = await Customer.findByIdAndUpdate(req.params.id, { $set: req.body });
     res.json(customerData);
   } catch (error) {
-    console.log("Error: ", error);
-    res.json(error);
+    if (error.message.includes('duplicate'))
+      res.json({ msg: "The Email already exists" });
+    else
+      res.json({ msg: "There was a problem saving the customer" });
   }
 };
 
@@ -61,7 +63,7 @@ exports.deleteCustomer = async (req, res) => {
       res.json({
         msg: `Customer ${
           customer.name
-        } cannot be deleted because he has an order!`
+          } cannot be deleted because he has an order!`
       });
   } catch (error) {
     console.log("Error", error);
