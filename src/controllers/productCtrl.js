@@ -48,9 +48,9 @@ exports.updateProduct = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   try {
     let product = await Product.findById(req.params.id);
-
+    console.log(product)
     if (product.isInOrder == 0) {
-      Product.deleteOne(customer);
+      await Product.remove(product);
       res.json({ msg: "Product deleted successfully!" });
     }else
       res.json({ msg: 'Product cannot be deleted because he is in an order!' });
