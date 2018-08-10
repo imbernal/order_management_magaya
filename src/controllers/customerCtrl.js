@@ -33,8 +33,10 @@ exports.saveCustomer = async (req, res) => {
 
     res.json(customer);
   } catch (error) {
-    console.log(error);
-    res.json(error);
+    if(error.message.includes('duplicate'))
+      res.json({msg: "The Email already exists"});
+    else
+      res.json({msg: "There was a problem saving the customer"});
   }
 };
 
